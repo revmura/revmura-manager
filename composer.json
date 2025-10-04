@@ -1,0 +1,26 @@
+{
+  "name": "revmura/revmura-manager",
+  "description": "Admin UI shell for Revmura modules (panel registry + Import/Export). No business logic.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "require": {},
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.9",
+    "wp-coding-standards/wpcs": "^3.0",
+    "phpcompatibility/php-compatibility": "^9.3",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "scripts": {
+    "phpcs": "phpcs -q",
+    "phpcbf": "phpcbf"
+  },
+  "extra": {
+    "phpcodesniffer-standard": "WordPress"
+  }
+}
