@@ -4,6 +4,11 @@
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "require": {},
+  "autoload": {
+    "psr-4": {
+      "Revmura\\Manager\\": "src/"
+    }
+  },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.9",
     "wp-coding-standards/wpcs": "^3.0",

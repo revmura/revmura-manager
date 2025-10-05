@@ -33,6 +33,15 @@ if ( is_readable( $autoload ) ) {
 	require_once $autoload;
 }
 
+// Load translations no earlier than `init` (WP 6.7+ requirement).
+add_action(
+	'init',
+	static function (): void {
+		load_plugin_textdomain( 'revmura', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+	},
+	1
+);
+
 /**
  * Defer Core API check until all plugins are loaded; never early-return.
  */
@@ -66,7 +75,7 @@ add_action(
  * Built-in Import/Export panel (talks to Core REST).
  */
 add_action(
-	'plugins_loaded',
+	'init',
 	static function (): void {
 		if ( has_action( 'revmura_manager_register_panel' ) ) {
 			do_action(
@@ -78,7 +87,8 @@ add_action(
 				)
 			);
 		}
-	}
+	},
+	20
 );
 
 /**
