@@ -183,6 +183,10 @@ function revmura_manager_render_import_export_panel(): void {
 	echo '<button class="button button-secondary" id="revmura-ie-dry">' . esc_html__( 'Dry-run Import', 'revmura' ) . '</button> ';
 	echo '<button class="button button-primary" id="revmura-ie-apply">' . esc_html__( 'Apply Import', 'revmura' ) . '</button></p>';
 
+	// 👇 New: file loader (optional convenience).
+	echo '<p><input type="file" id="revmura-ie-file" accept="application/json" /> ';
+	echo '<button class="button" id="revmura-ie-file-load">' . esc_html__( 'Load JSON file', 'revmura' ) . '</button></p>';
+
 	echo '<textarea id="revmura-ie-json" rows="16" style="width:100%;"></textarea>';
 
 	?>
@@ -229,6 +233,15 @@ function revmura_manager_render_import_export_panel(): void {
 				body: ta.value
 			});
 			alert(JSON.stringify(data, null, 2));
+		});
+
+		// 👇 Load JSON from file into the textarea
+		document.getElementById('revmura-ie-file-load').addEventListener('click', async () => {
+			const input = document.getElementById('revmura-ie-file');
+			if (!input || !input.files || input.files.length === 0) { alert('Choose a JSON file first'); return; }
+			const file = input.files[0];
+			const text = await file.text();
+			ta.value = text;
 		});
 	})();
 	</script>

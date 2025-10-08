@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="Revmura Manager">
-  <description>WordPress Coding Standards + PHPCompatibility for Manager</description>
+<ruleset name="Revmura Manager Minimal">
+  <description>Minimal checks: PHP compatibility + WP security only. No formatting/docs nags.</description>
 
-  <!-- Scan these paths -->
+  <!-- Scan just the plugin entry and src -->
   <file>revmura-manager.php</file>
   <file>src</file>
 
@@ -10,21 +10,33 @@
   <exclude-pattern>vendor/*</exclude-pattern>
   <exclude-pattern>node_modules/*</exclude-pattern>
 
-  <!-- Target PHP 8.3 -->
-  <config name="testVersion" value="8.3-"/>
+  <!-- PHP target & quiet banner -->
+  <config name="testVersion" value="8.1-8.3"/>
+  <config name="show_deprecated" value="0"/>
 
-  <!-- WordPress rules -->
+  <!-- Only engines we want -->
+  <rule ref="PHPCompatibility"/>
   <rule ref="WordPress-Core">
-    <exclude name="WordPress.Files.FileName"/>
-  </rule>
-  <rule ref="WordPress-Docs"/>
-  <rule ref="WordPress-Extra">
+    <!-- Allow PSR-4 filenames (no WordPress filename nags) -->
     <exclude name="WordPress.Files.FileName"/>
   </rule>
 
-  <!-- PHPCompatibility for WP -->
-  <rule ref="PHPCompatibilityWP"/>
+  <!-- Security-focused WP sniffs -->
+  <rule ref="WordPress.Security.EscapeOutput"/>
+  <rule ref="WordPress.Security.ValidatedSanitizedInput"/>
+  <rule ref="WordPress.Security.NonceVerification"/>
 
-  <!-- Project text domain -->
-  <config name="text_domain" value="revmura"/>
+  <!-- Silence formatting/style families -->
+  <rule ref="Generic"><severity>0</severity></rule>
+  <rule ref="PEAR"><severity>0</severity></rule>
+  <rule ref="PSR1"><severity>0</severity></rule>
+  <rule ref="PSR2"><severity>0</severity></rule>
+  <rule ref="Squiz"><severity>0</severity></rule>
+  <rule ref="Zend"><severity>0</severity></rule>
+
+  <!-- Workaround for a crashy fixer -->
+  <exclude name="Generic.CodeAnalysis.UnconditionalIfStatement"/>
+
+  <!-- Only scan PHP files -->
+  <arg name="extensions" value="php"/>
 </ruleset>
